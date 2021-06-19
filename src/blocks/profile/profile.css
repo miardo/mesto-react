@@ -2,7 +2,7 @@
     max-width: 68.75%;
     margin: auto;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-content: center;
     padding-top: 40px;
 }

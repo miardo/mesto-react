@@ -1,36 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import avatar from '../images/avatar.jpg';
+import api from '../utils/api';
+import Card from './Card';
 
-const handleEditAvatarClick = () => {
-    document.querySelector('.popup_type_upd-ava').classList.add('popup_opened');
-}
+function Main(props) {
+    const [userName, setUserName] = useState('ФИО пользователя');
+    const [userDescription, SetUserDescription] = useState('Информация о пользователе');
+    const [userAvatar, setUserAvatar] = useState({ avatar });
+    const [cards, setCards] = useState([]);
 
-const handleEditProfileClick = () => {
-    document.querySelector('.popup_type_edit-form').classList.add('popup_opened');
-}
+    useEffect(() => {
+        Promise.all([api.getUserInfo(), api.getInitialCards()])
+            .then(([userInfo, initialCards]) => {
+                setUserName(userInfo.name);
+                SetUserDescription(userInfo.about);
+                setUserAvatar(userInfo.avatar);
+                setCards(initialCards)
+            })
+            .catch((err) => console.log(err));
+    }, []);
 
-const handleAddPlaceClick = () => {
-    document.querySelector('.popup_type_add-card').classList.add('popup_opened');
-}
-
-function Main() {
     return (
         <main className="content">
             <section className="profile">
                 <div className="profile__img">
-                    <img src={avatar} alt="Аватарка профиля" className="profile__photo" />
-                    <button type="button" className="profile__edit-photo-button" aria-label="Редактировать аватарку" onClick={handleEditAvatarClick}></button>
+                    <div style={{ backgroundImage: `url(${userAvatar})` }} alt="Аватарка профиля" className="profile__photo"></div>
+                    <button type="button" className="profile__edit-photo-button" aria-label="Редактировать аватарку" onClick={props.onEditAvatar}></button>
                 </div>
                 <div className="profile__account">
                     <div className="profile__name">
-                        <h1 className="profile__name-text">ФИО пользователя</h1>
-                        <button type="button" className="profile__edit-button" aria-label="Редактировать профиль" onClick={handleEditProfileClick}></button>
+                        <h1 className="profile__name-text">{userName}</h1>
+                        <button type="button" className="profile__edit-button" aria-label="Редактировать профиль" onClick={props.onEditProfile}></button>
                     </div>
-                    <p className="profile__description">Информация о пользователе</p>
+                    <p className="profile__description">{userDescription}</p>
                 </div>
-                <button type="button" className="profile__add-button" aria-label="Добавить карточку" onClick={handleAddPlaceClick}></button>
+                <button type="button" className="profile__add-button" aria-label="Добавить карточку" onClick={props.onAddPlace}></button>
             </section>
             <section className="elements">
+                {cards.map((card) => (
+                    <Card
+                        card={card}
+                        key={card._id}
+                        onCardClick={props.onCardClick}
+                    />
+                ))}
             </section>
         </main>
     );
