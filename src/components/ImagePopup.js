@@ -2,7 +2,7 @@ import React from 'react';
 
 function ImagePopup(props) {
     return (
-        <article className={`popup popup_type_show-image ${props.card ? 'popup_opened' : ''}`}>
+        <article className={`popup popup_type_show-image ${props.card.link ? 'popup_opened' : ''}`}>
             <form name="image-form" className="popup__container popup__container_style-edition">
                 <figure className="popup__container-image-block">
                     <img src={`${props.card.link}`} alt={props.card.name} className="popup__container-image" />

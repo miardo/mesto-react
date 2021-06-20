@@ -6,32 +6,32 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 
 function App() {
-const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState('');
-const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState('');
-const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState('');
-const [selectedCard, setSelectedCard] = useState('');
+const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+const [selectedCard, setSelectedCard] = useState({name: '', link: ''});
 
 const handleCardClick = (card) => {
   setSelectedCard(card)
 }
 
 const handleEditProfileClick = () => {
-  setIsEditProfilePopupOpen('popup_opened')
+  setIsEditProfilePopupOpen(true)
 }
 
 const handleEditAvatarClick = () => {
-  setIsEditAvatarPopupOpen('popup_opened')
+  setIsEditAvatarPopupOpen(true)
 }
 
 const handleAddPlaceClick = () => {
-  setIsAddPlacePopupOpen('popup_opened')
+  setIsAddPlacePopupOpen(true)
 }
 
 const closeAllPopups = () => {
-  setIsEditProfilePopupOpen('');
-  setIsEditAvatarPopupOpen('');
-  setIsAddPlacePopupOpen('');
-  setSelectedCard('');
+  setIsEditProfilePopupOpen(false);
+  setIsEditAvatarPopupOpen(false);
+  setIsAddPlacePopupOpen(false);
+  setSelectedCard({name: '', link: ''});
 }
 
   return (
